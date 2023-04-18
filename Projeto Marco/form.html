@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./assets_form/style.css">
+  <title>Formulario</title>
+</head>
+<body>
+  <div class="img_logo">
+    <img src="./imagens/logo.png" alt="Colegio Vencer" id="img_circular" width="430">
+  </div>
+  <legend>Formulario de Reserva</legend>
+  <br>
+    <form action="">
+      <label for="">
+        Nome Completo
+        <input type="name" id="name" required placeholder="Francisco Da Silva" autofocus->
+      </label>
+      <div>
+        <label for="">
+          Disciplina
+          <input type="text" required placeholder="Matemática" maxlength="10">
+        </label>
+      </div>
+      <label for="">
+        Telefone
+        <input type="tel" name="telefone" id="tel" required placeholder="(11) 91010-1010">
+      </label>
+      <div class="date">
+        <label for="">
+          Data
+          <input type="date" min="2023-03-21" max="2023-12-31" required>
+        </label>
+      </div>
+      <div class="itens_select">
+        <input type="checkbox" class="itens" name="intens[]" value="Televisão" onClick="addToList(this, 'txt1')">Televisão<br>
+        <input type="checkbox" class="itens" name="intens[]" value="Notebook"  onClick="addToList(this, 'txt1')">Notebook<br>
+        <input type="checkbox" class="itens" name="intens[]" value="Microfone"  onClick="addToList(this, 'txt1')">Microfone<br>
+        <input type="checkbox" class="itens" name="intens[]" value="Projetor"  onClick="addToList(this, 'txt1')">Projetor<br>
+      </div>
+      <textarea rows="6" cols="10" name="txt1" id="txt1" style="color:#808080" readonly></textarea>
+      <div class="button">
+        <button type="submit" disabled="disabled" onclick="reservado()">Reservar</button>
+      </div>
+    </form>
+    
+    <script type="text/javascript">
+
+      function checkInputs(inputs) {
+        var filled = true;
+        
+        inputs.forEach(function(input) {
+            
+          if(input.value === "") {
+              filled = false;
+          }
+        
+        });
+        
+        return filled;
+        
+      }
+      var inputs = document.querySelectorAll("input");
+      var button = document.querySelector("button");
+      inputs.forEach(function(input) {
+          
+        input.addEventListener("keyup", function() {
+          if(checkInputs(inputs)) {
+            button.disabled = false;
+          } else {
+            button.disabled = true;
+          }
+        });
+      });
+
+      function reservado()
+      {
+        alert("Parabéns os intens foram reservados!");
+      }
+      var listCheckedOptions = [];
+      
+      function addToList(checkObj, outputObjID){
+        //Remove do array caso o elemento já esteja inserido
+        if (listCheckedOptions.indexOf(checkObj.value) >= 0) {
+          listCheckedOptions.splice(listCheckedOptions.indexOf(checkObj.value), 1);
+        }else{
+          if(listCheckedOptions.length >= 4){ 
+            alert("Máx 4 Elemenos selecionados");
+            checkObj.checked = "";
+            return;
+          }
+          listCheckedOptions.push(checkObj.value);
+        }
+      
+        document.getElementById(outputObjID).value = ""; //Limpa o textarea
+        document.getElementById(outputObjID).value = listCheckedOptions.join('\r\n'); //Adiciona no textarea
+      
+        return;
+      }
+
+    </script>
+</body>
+</html>
